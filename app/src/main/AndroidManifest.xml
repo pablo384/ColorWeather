@@ -21,7 +21,8 @@
         <activity
             android:name=".DailyWeatherActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".HourlyWeatherActivity"></activity>
+        <activity android:name=".HourlyWeatherActivity" />
+        <activity android:name=".MinutlyWeatherActivity"></activity>
     </application>
 
 </manifest>
