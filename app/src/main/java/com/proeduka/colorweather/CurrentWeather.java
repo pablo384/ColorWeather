@@ -58,6 +58,14 @@ public class CurrentWeather {
         this.lowestTemp = lowestTemp;
         this.iconImageWT = iconImageWT;
     }
+    public CurrentWeather(Activity activity, String currentTemp, String descriptionWT, String highestTemp, String lowestTemp, String iconImageWT) {
+        this.currentTemp = currentTemp;
+        this.descriptionWT = descriptionWT;
+        this.highestTemp = highestTemp;
+        this.lowestTemp = lowestTemp;
+        this.iconImageWT = iconImageWT;
+        ButterKnife.bind(this,activity);
+    }
 
     public String getCurrentTemp() {
         return currentTemp;
