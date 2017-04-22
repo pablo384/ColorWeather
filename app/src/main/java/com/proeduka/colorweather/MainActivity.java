@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.lowestTempTextView) TextView lowestTemp;
     @BindView(R.id.iconImageView) ImageView iconWT;
 
-    @BindDrawable(R.drawable.clear_night) Drawable clearNight;
 
     public static final String TAG=MainActivity.class.getSimpleName();
 
@@ -34,7 +33,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        iconWT.setImageDrawable(clearNight);
+        CurrentWeather currentWeather = new CurrentWeather(MainActivity.this);
+
+        currentWeather.setIconImageWT(CurrentWeather.PARTLY_CLOUDY_DAY);
+        currentWeather.setDescriptionWT("Jodido");
+        currentWeather.setCurrentTemp("25");
+        currentWeather.setHighestTemp("H:30");
+        currentWeather.setLowestTemp("L:20");
+
+        iconWT.setImageDrawable(currentWeather.getIconDrawableResource());
+        descriptionWT.setText(currentWeather.getDescriptionWT());
+        currentTemp.setText(currentWeather.getCurrentTemp());
+        highestTemp.setText(currentWeather.getHighestTemp());
+        lowestTemp.setText(currentWeather.getLowestTemp());
     }
 
     @OnClick(R.id.dailyTextView)

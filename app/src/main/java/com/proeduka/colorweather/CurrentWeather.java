@@ -1,8 +1,10 @@
 package com.proeduka.colorweather;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 
 import butterknife.BindDrawable;
+import butterknife.ButterKnife;
 
 /**
  * Created by pablo384 on 22/04/17.
@@ -44,7 +46,10 @@ public class CurrentWeather {
     @BindDrawable(R.drawable.sunny) Drawable sunny;
     @BindDrawable(R.drawable.wind) Drawable wind;
 
-    public CurrentWeather(){}
+
+    public CurrentWeather(Activity activity){
+        ButterKnife.bind(this,activity);
+    }
 
     public CurrentWeather(String currentTemp, String descriptionWT, String highestTemp, String lowestTemp, String iconImageWT) {
         this.currentTemp = currentTemp;
@@ -93,7 +98,7 @@ public class CurrentWeather {
     public void setIconImageWT(String iconImageWT) {
         this.iconImageWT = iconImageWT;
     }
-    private Drawable getIconDrawableResource(){
+    public Drawable getIconDrawableResource(){
 
         switch (iconImageWT) {
             case CLEAR_NIGHT:
