@@ -60,7 +60,7 @@
         tools:layout_constraintRight_creator="1" />
 
     <ImageView
-        android:contentDescription="Icono de clima"
+        android:contentDescription="@string/description_icono_de_clima"
         android:id="@+id/degreeImageVIew"
         android:layout_width="15dp"
         android:layout_height="15dp"
@@ -121,7 +121,7 @@
         android:layout_marginLeft="49dp"
         android:layout_marginRight="49dp"
         android:layout_marginStart="49dp"
-        android:text="Daily"
+        android:text="@string/daily"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -138,7 +138,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="Hourly"
+        android:text="@string/hourly"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -153,7 +153,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="Minutely"
+        android:text="@string/minutely"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
