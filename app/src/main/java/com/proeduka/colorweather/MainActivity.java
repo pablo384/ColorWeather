@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,24 +29,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-
     }
 
-    public void dailyCLic(View v){
+    @OnClick(R.id.dailyTextView)
+    public void dailyCLic(){
         Intent intent = new Intent(MainActivity.this, DailyWeatherActivity.class);
         startActivity(intent);
         Log.d(TAG,"DailyTextView CLic");
     }
-    public void HourlyCLic(View v){
+    @OnClick(R.id.hourlyTextView)
+    public void hourlyCLic(){
         Intent intent = new Intent(MainActivity.this, HourlyWeatherActivity.class);
         startActivity(intent);
         Log.d(TAG,"HourlyTextView CLic");
     }
-    public void MinutelyCLic(View v){
+    @OnClick(R.id.minutelyTextView)
+    public void minutelyCLic(){
         Intent intent = new Intent(MainActivity.this, MinutlyWeatherActivity.class);
         startActivity(intent);
         Log.d(TAG,"MinutelyTextView CLic");
     }
+
+
 
 }
