@@ -1,6 +1,7 @@
 package com.proeduka.colorweather.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class DailyWeatherAdapter extends BaseAdapter {
 
     ArrayList<Day> days;
     Context context;
+    public static String TAG= "Vista";
 
     public DailyWeatherAdapter (Context context, ArrayList<Day> days){
         this.context=context;
@@ -42,7 +44,15 @@ public class DailyWeatherAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        view = LayoutInflater.from(context).inflate(R.layout.daily_list_item,null);
+
+
+
+        if (view==null){
+
+            view = LayoutInflater.from(context).inflate(R.layout.daily_list_item,parent,false);
+            Log.d(TAG,"Crendo vista desde 0");
+        }
+
         TextView dayTitle =(TextView) view.findViewById(R.id.dailyListTitle);
         TextView dayDescription =(TextView) view.findViewById(R.id.dailyListDescription);
         TextView dayProbability =(TextView) view.findViewById(R.id.dailyListProbability);
