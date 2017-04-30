@@ -5,6 +5,8 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
+import com.proeduka.colorweather.adapters.DailyWeatherAdapter;
+
 import java.util.ArrayList;
 
 public class DailyWeatherActivity extends ListActivity {
@@ -14,21 +16,17 @@ public class DailyWeatherActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_weather);
 
-        ArrayList<String> daysArray = new ArrayList<String>();
-        daysArray.add("Lunes");
-        daysArray.add("Martes");
-        daysArray.add("Miercoles");
-        daysArray.add("Jueves");
-        daysArray.add("Viernes");
-        daysArray.add("Sabado");
-        daysArray.add("Domingo");
+        ArrayList<Day> daysArray = new ArrayList<Day>();
+        Day day = new Day("Monday","Partly MOjao", "muchisima %");
+
+        for (int i=0; i<500; i++){
+            daysArray.add(day);
+        }
 
 
-        ArrayAdapter<String> daysAdapter =
-                new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1,
-                        daysArray);
 
-        setListAdapter(daysAdapter);
+        DailyWeatherAdapter dailyWeatherAdapter = new DailyWeatherAdapter(this,daysArray);
+
+        setListAdapter(dailyWeatherAdapter);
     }
 }
