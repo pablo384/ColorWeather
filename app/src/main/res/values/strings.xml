@@ -2,8 +2,8 @@
     <string name="app_name">Color Weather</string>
     <string name="hourly_forecast">Hourly Forecast</string>
     <string name="daily_forecast">Daily Forecast</string>
-    <string name="minutely_forecast">Minutly Forecast</string>
-    <string name="description_icono_de_clima">Icono de clima</string>
+    <string name="minutely_forecast">Minutely Forecast</string>
+    <string name="description_icono_de_clima">Icon de clima</string>
     <string name="minutely">Minutely</string>
     <string name="hourly">Hourly</string>
     <string name="daily">Daily</string>
