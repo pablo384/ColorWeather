@@ -7,20 +7,26 @@
     tools:background="@drawable/bg_gradient_blue">
 
     <TextView
-        android:id="@+id/hourlyTitleTextView"
+        android:id="@+id/dailyListTitle"
         style="@style/mainFont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="19:00"
+        tools:text="Today"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/hourlyDescriptionTExtView"
+        android:id="@+id/dailyListDescription"
         style="@style/mainFont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Sunny" />
+        tools:text="Partly CLoudy in the Morning" />
 
-
+    <TextView
+        android:id="@+id/dailyListProbability"
+        style="@style/mainFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        tools:text="Rain Probability: 0%" />
 
 </LinearLayout>

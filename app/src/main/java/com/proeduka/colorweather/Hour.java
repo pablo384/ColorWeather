@@ -9,6 +9,11 @@ public class Hour {
     private String title;
     private String Weatherdescription;
 
+    public Hour(String title, String weatherdescription) {
+        this.title = title;
+        Weatherdescription = weatherdescription;
+    }
+
     public String getTitle() {
         return title;
     }
