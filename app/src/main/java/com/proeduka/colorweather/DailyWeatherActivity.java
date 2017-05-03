@@ -1,11 +1,10 @@
 package com.proeduka.colorweather;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
 import com.proeduka.colorweather.adapters.DailyWeatherAdapter;
+import com.proeduka.colorweather.models.Day;
 
 import java.util.ArrayList;
 

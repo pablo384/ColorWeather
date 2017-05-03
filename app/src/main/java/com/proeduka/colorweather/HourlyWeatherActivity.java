@@ -1,11 +1,11 @@
 package com.proeduka.colorweather;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
 import com.proeduka.colorweather.adapters.HourlyWeatherAdapter;
+import com.proeduka.colorweather.models.Hour;
 
 import java.util.ArrayList;
 

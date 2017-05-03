@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@drawable/bg_gradient_blue"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/minutelyTitleTextView"
+        style="@style/mainFont"
+        tools:text="15:21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/minutelyProbabilityTextView"
+        style="@style/mainFont"
+        tools:text="0%"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

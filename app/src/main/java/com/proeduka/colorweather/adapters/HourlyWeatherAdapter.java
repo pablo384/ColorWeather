@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.proeduka.colorweather.Hour;
+import com.proeduka.colorweather.models.Hour;
 import com.proeduka.colorweather.R;
 
 import java.util.ArrayList;

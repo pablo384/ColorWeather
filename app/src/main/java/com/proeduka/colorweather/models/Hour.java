@@ -1,4 +1,4 @@
-package com.proeduka.colorweather;
+package com.proeduka.colorweather.models;
 
 /**
  * Created by pablo384 on 03/05/17.

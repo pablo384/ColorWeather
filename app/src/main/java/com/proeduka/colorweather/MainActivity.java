@@ -1,11 +1,9 @@
 package com.proeduka.colorweather;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
     @OnClick(R.id.minutelyTextView)
     public void minutelyCLic(){
-        Intent intent = new Intent(MainActivity.this, MinutlyWeatherActivity.class);
+        Intent intent = new Intent(MainActivity.this, MinutelyWeatherActivity.class);
         startActivity(intent);
         Log.d(TAG,"MinutelyTextView CLic");
     }
