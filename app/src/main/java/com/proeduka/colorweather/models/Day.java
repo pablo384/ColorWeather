@@ -9,6 +9,8 @@ public class Day {
     private String weatherDescription;
     private String rainProbability;
 
+    public Day(){}
+
     public Day(String dayName, String weatherDescription, String rainProbability) {
         this.dayName = dayName;
         this.weatherDescription = weatherDescription;

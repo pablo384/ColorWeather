@@ -15,10 +15,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.proeduka.colorweather.models.CurrentWeather;
 import com.proeduka.colorweather.R;
+import com.proeduka.colorweather.models.Day;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+
+                            ArrayList<Day> dayArrayListPrueba = getDailyWeatherwithJSON(response);
+                            for (Day day: dayArrayListPrueba){
+                                Log.d(TAG,day.getDayName());
+                                Log.d(TAG,day.getWeatherDescription());
+                                Log.d(TAG,day.getRainProbability());
+                            }
+
                             CurrentWeather currentWeather = getCurrenteWeatherFromJson(response);
                             iconWT.setImageDrawable(currentWeather.getIconDrawableResource());
                             descriptionWT.setText(currentWeather.getDescriptionWT());
@@ -120,7 +134,29 @@ public class MainActivity extends AppCompatActivity {
 
         return currentWeather;
     }
+    private ArrayList<Day> getDailyWeatherwithJSON(String json) throws JSONException{
 
+        DateFormat date = new SimpleDateFormat("EEEE");
 
+        ArrayList<Day> dayArrayList = new ArrayList<Day>();
 
+        JSONObject jsonObject= new JSONObject(json);
+
+        JSONObject jsonWhitDailyWeater = jsonObject.getJSONObject("daily");
+        JSONArray jsonArraywithDailyWeatherDATA = jsonWhitDailyWeater.getJSONArray("data");
+
+        for (int i=0; i < jsonWhitDailyWeater.length(); i++){
+
+            JSONObject arrayOfDATA = jsonArraywithDailyWeatherDATA.getJSONObject(i);
+
+            String rainProbability = arrayOfDATA.getLong("precipProbability")+"";
+            String description = arrayOfDATA.getString("summary");
+            String dateDay = date.format(arrayOfDATA.getLong("time")*1000);
+
+            Day day = new Day(dateDay, description, rainProbability);
+            dayArrayList.add(day);
+        }
+
+        return dayArrayList;
+    }
 }
