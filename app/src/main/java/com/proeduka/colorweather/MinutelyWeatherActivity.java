@@ -33,11 +33,10 @@ public class MinutelyWeatherActivity extends Activity{
         }
 
         MinutelyWeatherAdapter minutelyWeatherAdapter = new MinutelyWeatherAdapter(this,minuteArrayList);
-
         recyclerViewMinutely.setAdapter(minutelyWeatherAdapter);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewMinutely.setLayoutManager(layoutManager);
+        recyclerViewMinutely.setHasFixedSize(true);
 
     }
 }
