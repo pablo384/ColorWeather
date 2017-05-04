@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 import com.proeduka.colorweather.models.CurrentWeather;
 import com.proeduka.colorweather.R;
 import com.proeduka.colorweather.models.Day;
+import com.proeduka.colorweather.models.Hour;
+import com.proeduka.colorweather.models.Minute;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.lowestTempTextView) TextView lowestTemp;
     @BindView(R.id.iconImageView) ImageView iconWT;
     public static ArrayList<Day> dayArrayListPrueba;
+    public static ArrayList<Hour> hourArrayListPrueba;
 
 
     public static final String TAG=MainActivity.class.getSimpleName();
@@ -61,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-
+                            hourArrayListPrueba = getHourlyWeatherJSON(response);
                             dayArrayListPrueba = getDailyWeatherwithJSON(response);
-                            for (Day day: dayArrayListPrueba){
-                                Log.d(TAG,day.getDayName());
-                                Log.d(TAG,day.getWeatherDescription());
-                                Log.d(TAG,day.getRainProbability());
+                            for (Hour hour: hourArrayListPrueba){
+                                Log.d(TAG,hour.getTitle());
+                                Log.d(TAG,hour.getWeatherdescription());
+                                //Log.d(TAG,hour.getRainProbability());
                             }
 
                             CurrentWeather currentWeather = getCurrenteWeatherFromJson(response);
@@ -150,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
             JSONObject arrayOfDATA = jsonArraywithDailyWeatherDATA.getJSONObject(i);
 
-            String rainProbability = arrayOfDATA.getLong("precipProbability")+"";
+            String rainProbability = arrayOfDATA.getDouble("precipProbability")+"";
             String description = arrayOfDATA.getString("summary");
             String dateDay = date.format(arrayOfDATA.getLong("time")*1000);
 
@@ -159,6 +162,54 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return dayArrayList;
+    }
+    private ArrayList<Hour> getHourlyWeatherJSON(String json) throws JSONException{
+
+        DateFormat date = new SimpleDateFormat("h:mm a");
+
+        ArrayList<Hour> hourArrayList = new ArrayList<Hour>();
+
+        JSONObject jsonObject= new JSONObject(json);
+
+        JSONObject jsonWhitHourlyWeater = jsonObject.getJSONObject("hourly");
+        JSONArray jsonArraywithHourlyWeatherDATA = jsonWhitHourlyWeater.getJSONArray("data");
+
+        for (int i=0; i < jsonArraywithHourlyWeatherDATA.length(); i++){
+
+            JSONObject arrayOfDATA = jsonArraywithHourlyWeatherDATA.getJSONObject(i);
+
+
+            String description = arrayOfDATA.getString("summary");
+            String dateHour = date.format(arrayOfDATA.getLong("time")*1000);
+
+            Hour hour = new Hour(dateHour, description);
+            hourArrayList.add(hour);
+        }
+        return hourArrayList;
+    }
+    private ArrayList<Minute> getMinutelyWeatherJSON(String json) throws JSONException{
+
+        DateFormat date = new SimpleDateFormat("h:mm a");
+
+        ArrayList<Minute> minuteArrayList = new ArrayList<Minute>();
+
+        JSONObject jsonObject= new JSONObject(json);
+
+        JSONObject jsonWhitMinutelyWeater = jsonObject.getJSONObject("hourly");
+        JSONArray jsonArraywithMinutelyWeatherDATA = jsonWhitMinutelyWeater.getJSONArray("data");
+
+        for (int i=0; i < jsonArraywithMinutelyWeatherDATA.length(); i++){
+
+            JSONObject arrayOfDATA = jsonArraywithMinutelyWeatherDATA.getJSONObject(i);
+
+
+            String description = arrayOfDATA.getString("summary");
+            String dateHour = date.format(arrayOfDATA.getLong("time")*1000);
+
+            Minute minute = new Minute(dateHour, description);
+            minuteArrayList.add(minute);
+        }
+        return minuteArrayList;
     }
 
 }

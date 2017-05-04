@@ -24,15 +24,8 @@ public class HourlyWeatherActivity extends Activity {
         setContentView(R.layout.activity_hourly_weather);
         ButterKnife.bind(this);
 
-        ArrayList<Hour> hourArrayList = new ArrayList<Hour>();
 
-        Hour hour = new Hour("20:15","Sunny");
-
-        for (int i=0; i <500; i++){
-            hourArrayList.add(hour);
-        }
-
-        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(hourArrayList,this);
+        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(MainActivity.hourArrayListPrueba,this);
 
         hourlyListView.setAdapter(hourlyWeatherAdapter);
 
