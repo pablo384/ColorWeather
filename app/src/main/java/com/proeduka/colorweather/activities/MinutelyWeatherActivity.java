@@ -1,10 +1,11 @@
-package com.proeduka.colorweather;
+package com.proeduka.colorweather.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.proeduka.colorweather.R;
 import com.proeduka.colorweather.adapters.MinutelyWeatherAdapter;
 import com.proeduka.colorweather.models.Minute;
 

@@ -1,8 +1,9 @@
-package com.proeduka.colorweather;
+package com.proeduka.colorweather.activities;
 
 import android.app.ListActivity;
 import android.os.Bundle;
 
+import com.proeduka.colorweather.R;
 import com.proeduka.colorweather.adapters.DailyWeatherAdapter;
 import com.proeduka.colorweather.models.Day;
 

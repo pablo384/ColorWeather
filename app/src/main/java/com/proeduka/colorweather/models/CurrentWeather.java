@@ -1,7 +1,9 @@
-package com.proeduka.colorweather;
+package com.proeduka.colorweather.models;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+
+import com.proeduka.colorweather.R;
 
 import butterknife.BindDrawable;
 import butterknife.ButterKnife;
