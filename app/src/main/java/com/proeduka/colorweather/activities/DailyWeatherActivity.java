@@ -16,12 +16,7 @@ public class DailyWeatherActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_weather);
 
-        ArrayList<Day> daysArray = new ArrayList<Day>();
-        Day day = new Day("Monday","Partly MOjao", "muchisima %");
-
-        for (int i=0; i<500; i++){
-            daysArray.add(day);
-        }
+        ArrayList<Day> daysArray = MainActivity.dayArrayListPrueba;
 
 
 

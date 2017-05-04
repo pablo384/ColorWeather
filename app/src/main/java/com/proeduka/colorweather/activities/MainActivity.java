@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.highestTempTextView) TextView highestTemp;
     @BindView(R.id.lowestTempTextView) TextView lowestTemp;
     @BindView(R.id.iconImageView) ImageView iconWT;
+    public static ArrayList<Day> dayArrayListPrueba;
 
 
     public static final String TAG=MainActivity.class.getSimpleName();
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
 
-                            ArrayList<Day> dayArrayListPrueba = getDailyWeatherwithJSON(response);
+                            dayArrayListPrueba = getDailyWeatherwithJSON(response);
                             for (Day day: dayArrayListPrueba){
                                 Log.d(TAG,day.getDayName());
                                 Log.d(TAG,day.getWeatherDescription());
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonWhitDailyWeater = jsonObject.getJSONObject("daily");
         JSONArray jsonArraywithDailyWeatherDATA = jsonWhitDailyWeater.getJSONArray("data");
 
-        for (int i=0; i < jsonWhitDailyWeater.length(); i++){
+        for (int i=0; i < jsonArraywithDailyWeatherDATA.length(); i++){
 
             JSONObject arrayOfDATA = jsonArraywithDailyWeatherDATA.getJSONObject(i);
 
@@ -159,4 +160,5 @@ public class MainActivity extends AppCompatActivity {
 
         return dayArrayList;
     }
+
 }
