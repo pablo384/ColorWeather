@@ -27,13 +27,20 @@ public class MinutelyWeatherActivity extends Activity{
 
         ArrayList<Minute> minuteArrayList = new ArrayList<Minute>();
 
-        Minute minute = new Minute("15:25","99%");
+        Minute minute = new Minute("No se pueden obtener estos datos","99%");
 
         for (int i=0; i<500; i++) {
             minuteArrayList.add(minute);
         }
+        MinutelyWeatherAdapter minutelyWeatherAdapter;
 
-        MinutelyWeatherAdapter minutelyWeatherAdapter = new MinutelyWeatherAdapter(this,minuteArrayList);
+        if (MainActivity.minuteArrayListPrueba!=null){
+            minutelyWeatherAdapter = new MinutelyWeatherAdapter(this,MainActivity.minuteArrayListPrueba);
+        }else {
+            minutelyWeatherAdapter = new MinutelyWeatherAdapter(this,minuteArrayList);
+        }
+
+
         recyclerViewMinutely.setAdapter(minutelyWeatherAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewMinutely.setLayoutManager(layoutManager);

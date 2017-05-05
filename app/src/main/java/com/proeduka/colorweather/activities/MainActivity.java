@@ -27,6 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,19 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
 
-
+    public static final String DATA = "data";
+    public static final String HOURLY = "hourly";
+    public static final String SUMMARY = "summary";
+    public static final String CURRENTLY = "currently";
+    public static final String DAILY = "daily";
+    public static final String ICON = "icon";
+    public static final String TEMPERATURE = "temperature";
+    public static final String TEMPERATURE_MIN = "temperatureMin";
+    public static final String TEMPERATURE_MAX = "temperatureMax";
+    public static final String PRECIP_PROBABILITY = "precipProbability";
+    public static final String TIME = "time";
+    public static final String MINUTELY = "minutely";
+    public static final String AMERICA_SANTO_DOMINGO = "America/Santo_Domingo";
     @BindView(R.id.descriptionTextView) TextView descriptionWT;
     @BindView(R.id.currentTempTextView) TextView currentTemp;
     @BindView(R.id.highestTempTextView) TextView highestTemp;
@@ -43,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.iconImageView) ImageView iconWT;
     public static ArrayList<Day> dayArrayListPrueba;
     public static ArrayList<Hour> hourArrayListPrueba;
+    public static ArrayList<Minute> minuteArrayListPrueba;
 
 
     public static final String TAG=MainActivity.class.getSimpleName();
@@ -56,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://api.darksky.net/forecast/1454f81bb70550586e66207bcc3aa8d3/19.223319, -70.513781?units=si";
+        //String url = "https://api.darksky.net/forecast/1454f81bb70550586e66207bcc3aa8d3/19.223319, -70.513781?units=si";
+        String url = "https://api.darksky.net/forecast/1454f81bb70550586e66207bcc3aa8d3/37.8267,-122.4233?units=si";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -66,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             hourArrayListPrueba = getHourlyWeatherJSON(response);
                             dayArrayListPrueba = getDailyWeatherwithJSON(response);
-                            for (Hour hour: hourArrayListPrueba){
-                                Log.d(TAG,hour.getTitle());
-                                Log.d(TAG,hour.getWeatherdescription());
+                            minuteArrayListPrueba = getMinutelyWeatherJSON(response);
+                            for (Minute minute: minuteArrayListPrueba){
+                                Log.d(TAG,minute.getTitle());
+                                Log.d(TAG,minute.getRainProbability());
                                 //Log.d(TAG,hour.getRainProbability());
                             }
 
@@ -117,17 +133,17 @@ public class MainActivity extends AppCompatActivity {
     private CurrentWeather getCurrenteWeatherFromJson(String json) throws JSONException{
         JSONObject jsonObject= new JSONObject(json);
 
-        JSONObject jsonWithCUrrentWeather = jsonObject.getJSONObject("currently");
-        String summary = jsonWithCUrrentWeather.getString("summary");
-        String icon = jsonWithCUrrentWeather.getString("icon");
-        String temperature = Math.round(jsonWithCUrrentWeather.getDouble("temperature"))+"";
+        JSONObject jsonWithCUrrentWeather = jsonObject.getJSONObject(CURRENTLY);
+        String summary = jsonWithCUrrentWeather.getString(SUMMARY);
+        String icon = jsonWithCUrrentWeather.getString(ICON);
+        String temperature = Math.round(jsonWithCUrrentWeather.getDouble(TEMPERATURE))+"";
 
-        JSONObject jsonWhitDailyWeater = jsonObject.getJSONObject("daily");
-        JSONArray jsonArray = jsonWhitDailyWeater.getJSONArray("data");
+        JSONObject jsonWhitDailyWeater = jsonObject.getJSONObject(DAILY);
+        JSONArray jsonArray = jsonWhitDailyWeater.getJSONArray(DATA);
         JSONObject jsonWhitTodayData= jsonArray.getJSONObject(0);
 
-        String minTemp = Math.round(jsonWhitTodayData.getDouble("temperatureMin"))+"";
-        String maxTemp = Math.round(jsonWhitTodayData.getDouble("temperatureMax"))+"";
+        String minTemp = Math.round(jsonWhitTodayData.getDouble(TEMPERATURE_MIN))+"";
+        String maxTemp = Math.round(jsonWhitTodayData.getDouble(TEMPERATURE_MAX))+"";
 
         CurrentWeather currentWeather = new CurrentWeather(MainActivity.this);
         currentWeather.setCurrentTemp(temperature);
@@ -141,21 +157,22 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Day> getDailyWeatherwithJSON(String json) throws JSONException{
 
         DateFormat date = new SimpleDateFormat("EEEE");
+        date.setTimeZone(TimeZone.getTimeZone(AMERICA_SANTO_DOMINGO));
 
         ArrayList<Day> dayArrayList = new ArrayList<Day>();
 
         JSONObject jsonObject= new JSONObject(json);
 
-        JSONObject jsonWhitDailyWeater = jsonObject.getJSONObject("daily");
-        JSONArray jsonArraywithDailyWeatherDATA = jsonWhitDailyWeater.getJSONArray("data");
+        JSONObject jsonWhitDailyWeater = jsonObject.getJSONObject(DAILY);
+        JSONArray jsonArraywithDailyWeatherDATA = jsonWhitDailyWeater.getJSONArray(DATA);
 
         for (int i=0; i < jsonArraywithDailyWeatherDATA.length(); i++){
 
             JSONObject arrayOfDATA = jsonArraywithDailyWeatherDATA.getJSONObject(i);
 
-            String rainProbability = arrayOfDATA.getDouble("precipProbability")+"";
-            String description = arrayOfDATA.getString("summary");
-            String dateDay = date.format(arrayOfDATA.getLong("time")*1000);
+            String rainProbability = arrayOfDATA.getDouble(PRECIP_PROBABILITY)+"%";
+            String description = arrayOfDATA.getString(SUMMARY);
+            String dateDay = date.format(arrayOfDATA.getLong(TIME)*1000);
 
             Day day = new Day(dateDay, description, rainProbability);
             dayArrayList.add(day);
@@ -166,21 +183,22 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Hour> getHourlyWeatherJSON(String json) throws JSONException{
 
         DateFormat date = new SimpleDateFormat("h:mm a");
+        date.setTimeZone(TimeZone.getTimeZone(AMERICA_SANTO_DOMINGO));
 
         ArrayList<Hour> hourArrayList = new ArrayList<Hour>();
 
         JSONObject jsonObject= new JSONObject(json);
 
-        JSONObject jsonWhitHourlyWeater = jsonObject.getJSONObject("hourly");
-        JSONArray jsonArraywithHourlyWeatherDATA = jsonWhitHourlyWeater.getJSONArray("data");
+        JSONObject jsonWhitHourlyWeater = jsonObject.getJSONObject(HOURLY);
+        JSONArray jsonArraywithHourlyWeatherDATA = jsonWhitHourlyWeater.getJSONArray(DATA);
 
         for (int i=0; i < jsonArraywithHourlyWeatherDATA.length(); i++){
 
             JSONObject arrayOfDATA = jsonArraywithHourlyWeatherDATA.getJSONObject(i);
 
 
-            String description = arrayOfDATA.getString("summary");
-            String dateHour = date.format(arrayOfDATA.getLong("time")*1000);
+            String description = arrayOfDATA.getString(SUMMARY);
+            String dateHour = date.format(arrayOfDATA.getLong(TIME)*1000);
 
             Hour hour = new Hour(dateHour, description);
             hourArrayList.add(hour);
@@ -190,23 +208,24 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Minute> getMinutelyWeatherJSON(String json) throws JSONException{
 
         DateFormat date = new SimpleDateFormat("h:mm a");
+        date.setTimeZone(TimeZone.getTimeZone(AMERICA_SANTO_DOMINGO));
 
         ArrayList<Minute> minuteArrayList = new ArrayList<Minute>();
 
         JSONObject jsonObject= new JSONObject(json);
 
-        JSONObject jsonWhitMinutelyWeater = jsonObject.getJSONObject("hourly");
-        JSONArray jsonArraywithMinutelyWeatherDATA = jsonWhitMinutelyWeater.getJSONArray("data");
+        JSONObject jsonWhitMinutelyWeater = jsonObject.getJSONObject(MINUTELY);
+        JSONArray jsonArraywithMinutelyWeatherDATA = jsonWhitMinutelyWeater.getJSONArray(DATA);
 
         for (int i=0; i < jsonArraywithMinutelyWeatherDATA.length(); i++){
 
             JSONObject arrayOfDATA = jsonArraywithMinutelyWeatherDATA.getJSONObject(i);
 
 
-            String description = arrayOfDATA.getString("summary");
-            String dateHour = date.format(arrayOfDATA.getLong("time")*1000);
+            String rainProbability = arrayOfDATA.getDouble(PRECIP_PROBABILITY)+"%";
+            String dateMinute = date.format(arrayOfDATA.getLong(TIME)*1000);
 
-            Minute minute = new Minute(dateHour, description);
+            Minute minute = new Minute(dateMinute, rainProbability);
             minuteArrayList.add(minute);
         }
         return minuteArrayList;
