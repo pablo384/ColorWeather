@@ -1,6 +1,7 @@
 package com.proeduka.colorweather.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,20 +26,13 @@ public class MinutelyWeatherActivity extends Activity{
         setContentView(R.layout.activity_minutely_weather);
         ButterKnife.bind(this);
 
-        ArrayList<Minute> minuteArrayList = new ArrayList<Minute>();
+        Intent intent = getIntent();
 
-        Minute minute = new Minute("No se pueden obtener estos datos","99%");
+        ArrayList<Minute> minuteArrayList = intent.getParcelableArrayListExtra(MainActivity.MINUTES_ARRAY_LIST);
 
-        for (int i=0; i<500; i++) {
-            minuteArrayList.add(minute);
-        }
-        MinutelyWeatherAdapter minutelyWeatherAdapter;
+        //Minute minute = new Minute("No se pueden obtener estos datos","99%");
 
-        if (MainActivity.minuteArrayListPrueba!=null){
-            minutelyWeatherAdapter = new MinutelyWeatherAdapter(this,MainActivity.minuteArrayListPrueba);
-        }else {
-            minutelyWeatherAdapter = new MinutelyWeatherAdapter(this,minuteArrayList);
-        }
+        MinutelyWeatherAdapter minutelyWeatherAdapter= new MinutelyWeatherAdapter(this,minuteArrayList);
 
 
         recyclerViewMinutely.setAdapter(minutelyWeatherAdapter);
