@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MINUTELY = "minutely";
     public static final String AMERICA_SANTO_DOMINGO = "America/Santo_Domingo";
     public static final String DAYS_ARRAY_LIST = "DAYS_ARRAY_LIST";
+    public static final String HOURS_ARRAY_LIST = "HOURS_ARRAY_LIST";
     @BindView(R.id.descriptionTextView) TextView descriptionWT;
     @BindView(R.id.currentTempTextView) TextView currentTemp;
     @BindView(R.id.highestTempTextView) TextView highestTemp;
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.hourlyTextView)
     public void hourlyCLic(){
         Intent intent = new Intent(MainActivity.this, HourlyWeatherActivity.class);
+        intent.putParcelableArrayListExtra(HOURS_ARRAY_LIST,hourArrayListPrueba);
         startActivity(intent);
         Log.d(TAG,"HourlyTextView CLic");
     }

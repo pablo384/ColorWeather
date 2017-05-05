@@ -1,6 +1,7 @@
 package com.proeduka.colorweather.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -24,9 +25,9 @@ public class HourlyWeatherActivity extends Activity {
         setContentView(R.layout.activity_hourly_weather);
         ButterKnife.bind(this);
 
-
-        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(MainActivity.hourArrayListPrueba,this);
-
+        Intent intent = getIntent();
+        ArrayList<Hour> hourArrayList = intent.getParcelableArrayListExtra(MainActivity.HOURS_ARRAY_LIST);
+        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(hourArrayList,this);
         hourlyListView.setAdapter(hourlyWeatherAdapter);
 
 
