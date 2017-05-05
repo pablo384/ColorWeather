@@ -26,7 +26,6 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TIME = "time";
     public static final String MINUTELY = "minutely";
     public static final String AMERICA_SANTO_DOMINGO = "America/Santo_Domingo";
+    public static final String DAYS_ARRAY_LIST = "DAYS_ARRAY_LIST";
     @BindView(R.id.descriptionTextView) TextView descriptionWT;
     @BindView(R.id.currentTempTextView) TextView currentTemp;
     @BindView(R.id.highestTempTextView) TextView highestTemp;
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.dailyTextView)
     public void dailyCLic(){
         Intent intent = new Intent(MainActivity.this, DailyWeatherActivity.class);
+        intent.putParcelableArrayListExtra(DAYS_ARRAY_LIST,dayArrayListPrueba);
         startActivity(intent);
         Log.d(TAG,"DailyTextView CLic");
     }
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
             JSONObject arrayOfDATA = jsonArraywithDailyWeatherDATA.getJSONObject(i);
 
-            String rainProbability = arrayOfDATA.getDouble(PRECIP_PROBABILITY)+"%";
+            String rainProbability = "Rain Probability: "+arrayOfDATA.getDouble(PRECIP_PROBABILITY)*100+"%";
             String description = arrayOfDATA.getString(SUMMARY);
             String dateDay = date.format(arrayOfDATA.getLong(TIME)*1000);
 
