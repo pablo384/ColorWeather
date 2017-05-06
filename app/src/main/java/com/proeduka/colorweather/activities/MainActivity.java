@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String HOURS_ARRAY_LIST = "HOURS_ARRAY_LIST";
     public static final String MINUTES_ARRAY_LIST = "MINUTES_ARRAY_LIST";
     public static final String RAIN_PROBABILITY = "Rain Probability: ";
+    public static final String CONNECTION_ERROR = "Connection Error";
+    public static final String Htemp = "H: %s°";
+    public static final String Ltemp = "L: %s°";
     @BindView(R.id.descriptionTextView) TextView descriptionWT;
     @BindView(R.id.currentTempTextView) TextView currentTemp;
     @BindView(R.id.highestTempTextView) TextView highestTemp;
@@ -96,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                             iconWT.setImageDrawable(currentWeather.getIconDrawableResource());
                             descriptionWT.setText(currentWeather.getDescriptionWT());
                             currentTemp.setText(currentWeather.getCurrentTemp());
-                            highestTemp.setText(String.format("H: %s°",currentWeather.getHighestTemp()));
-                            lowestTemp.setText(String.format("L: %s°",currentWeather.getLowestTemp()));
+                            highestTemp.setText(String.format(Htemp,currentWeather.getHighestTemp()));
+                            lowestTemp.setText(String.format(Ltemp,currentWeather.getLowestTemp()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this,"Connection Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, CONNECTION_ERROR, Toast.LENGTH_LONG).show();
             }
         });
         // Add the request to the RequestQueue.
