@@ -152,6 +152,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         intent.putParcelableArrayListExtra(MINUTES_ARRAY_LIST, minuteArrayListPrueba);
         startActivity(intent);
     }
+    @OnClick (R.id.refreshImageButton)
+    public void refreshCLic(){
+        onConnected(null);
+        locationUI();
+        Log.d(TAG,"CLic REFRESH");
+    }
 
     private CurrentWeather getCurrenteWeatherFromJson(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
