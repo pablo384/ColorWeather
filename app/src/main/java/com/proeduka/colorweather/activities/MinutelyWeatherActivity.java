@@ -7,13 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-
 import com.proeduka.colorweather.R;
 import com.proeduka.colorweather.adapters.MinutelyWeatherAdapter;
 import com.proeduka.colorweather.models.Minute;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,7 +18,6 @@ public class MinutelyWeatherActivity extends Activity{
 
     @BindView(R.id.minutelyRecyclerView)
     RecyclerView recyclerViewMinutely;
-
     @BindView(R.id.minutelyNoDataFound)
     TextView noDataFound;
 

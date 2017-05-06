@@ -1,15 +1,12 @@
 package com.proeduka.colorweather.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +22,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.location.LocationServices;
 import com.proeduka.colorweather.models.CurrentWeather;
 import com.proeduka.colorweather.R;
@@ -49,6 +45,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     public static final String DATA = "data";
     public static final String HOURLY = "hourly";
     public static final String SUMMARY = "summary";
@@ -69,6 +66,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public static final String CONNECTION_ERROR = "Connection Error";
     public static final String Htemp = "H: %s°";
     public static final String Ltemp = "L: %s°";
+    public static final int requestPermission= 1;
+    public static final String LOCATION_ERROR = "Location Error";
+    public static final String BASE_URL = "https://api.darksky.net/forecast";
+    public static final String API_KEY = "1454f81bb70550586e66207bcc3aa8d3";
+    public static final String UNITS = "units=si";
+    public static final String DATE_FORMAT_DAYS = "EEEE";
+    public static ArrayList<Day> dayArrayListWeather;
+    public static ArrayList<Hour> hourArrayListWeather;
+    public static ArrayList<Minute> minuteArrayListWeather;
+    public GoogleApiClient mGoogleApiClient;
+    public Location mLastLocation;
+
     @BindView(R.id.descriptionTextView)
     TextView descriptionWT;
     @BindView(R.id.currentTempTextView)
@@ -79,16 +88,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     TextView lowestTemp;
     @BindView(R.id.iconImageView)
     ImageView iconWT;
-    public static ArrayList<Day> dayArrayListPrueba;
-    public static ArrayList<Hour> hourArrayListPrueba;
-    public static ArrayList<Minute> minuteArrayListPrueba;
-
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-
-
-    public static final String TAG = MainActivity.class.getSimpleName();
-    public static final int requestPermission= 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,20 +95,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this /* FragmentActivity */,
-//                        this /* OnConnectionFailedListener */)
-//                .addApi(Drive.API)
-//                .addScope(Drive.SCOPE_FILE)
-//                .build();
-
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-            Log.d(TAG, "Instancia GOOGLESERVICES Created");
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermission();
@@ -135,28 +126,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @OnClick(R.id.dailyTextView)
     public void dailyCLic() {
         Intent intent = new Intent(MainActivity.this, DailyWeatherActivity.class);
-        intent.putParcelableArrayListExtra(DAYS_ARRAY_LIST, dayArrayListPrueba);
+        intent.putParcelableArrayListExtra(DAYS_ARRAY_LIST, dayArrayListWeather);
         startActivity(intent);
     }
 
     @OnClick(R.id.hourlyTextView)
     public void hourlyCLic() {
         Intent intent = new Intent(MainActivity.this, HourlyWeatherActivity.class);
-        intent.putParcelableArrayListExtra(HOURS_ARRAY_LIST, hourArrayListPrueba);
+        intent.putParcelableArrayListExtra(HOURS_ARRAY_LIST, hourArrayListWeather);
         startActivity(intent);
     }
 
     @OnClick(R.id.minutelyTextView)
     public void minutelyCLic() {
         Intent intent = new Intent(MainActivity.this, MinutelyWeatherActivity.class);
-        intent.putParcelableArrayListExtra(MINUTES_ARRAY_LIST, minuteArrayListPrueba);
+        intent.putParcelableArrayListExtra(MINUTES_ARRAY_LIST, minuteArrayListWeather);
         startActivity(intent);
     }
     @OnClick (R.id.refreshImageButton)
     public void refreshCLic(){
         onConnected(null);
         locationUI();
-        Log.d(TAG,"CLic REFRESH");
     }
 
     private CurrentWeather getCurrenteWeatherFromJson(String json) throws JSONException {
@@ -186,10 +176,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private ArrayList<Day> getDailyWeatherwithJSON(String json) throws JSONException {
 
-        DateFormat date = new SimpleDateFormat("EEEE");
+        DateFormat date = new SimpleDateFormat(DATE_FORMAT_DAYS);
         date.setTimeZone(TimeZone.getTimeZone(AMERICA_SANTO_DOMINGO));
 
-        ArrayList<Day> dayArrayList = new ArrayList<Day>();
+        ArrayList<Day> dayArrayList = new ArrayList<>();
 
         JSONObject jsonObject = new JSONObject(json);
 
@@ -209,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 dayArrayList.add(day);
             }
         }catch (JSONException o){
-
+            o.printStackTrace();
         }
 
 
@@ -221,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         DateFormat date = new SimpleDateFormat("h:mm a");
         date.setTimeZone(TimeZone.getTimeZone(AMERICA_SANTO_DOMINGO));
 
-        ArrayList<Hour> hourArrayList = new ArrayList<Hour>();
+        ArrayList<Hour> hourArrayList = new ArrayList<>();
 
         JSONObject jsonObject = new JSONObject(json);
 
@@ -241,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 hourArrayList.add(hour);
             }
         }catch (JSONException i){
-
+                i.printStackTrace();
         }
 
         return hourArrayList;
@@ -252,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         DateFormat date = new SimpleDateFormat("h:mm a");
         date.setTimeZone(TimeZone.getTimeZone(AMERICA_SANTO_DOMINGO));
 
-        ArrayList<Minute> minuteArrayList = new ArrayList<Minute>();
+        ArrayList<Minute> minuteArrayList = new ArrayList<>();
 
         JSONObject jsonObject = new JSONObject(json);
 
@@ -292,9 +282,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-
-
-
+            requestPermission();
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
@@ -316,15 +304,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         return true;
     }
     public StringRequest requestHTTP(String url){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        return new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            hourArrayListPrueba = getHourlyWeatherJSON(response);
-                            dayArrayListPrueba = getDailyWeatherwithJSON(response);
-                            minuteArrayListPrueba = getMinutelyWeatherJSON(response);
-//                            for (Minute minute : minuteArrayListPrueba) {
+                            hourArrayListWeather = getHourlyWeatherJSON(response);
+                            dayArrayListWeather = getDailyWeatherwithJSON(response);
+                            minuteArrayListWeather = getMinutelyWeatherJSON(response);
+//                            for (Minute minute : minuteArrayListWeather) {
 //                                Log.d(TAG, minute.getTitle());
 //                                Log.d(TAG, minute.getRainProbability());
 //                                //Log.d(TAG,hour.getRainProbability());
@@ -350,28 +338,45 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
         // Add the request to the RequestQueue.
-        return stringRequest;
     }
     public void locationUI(){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         //String url = "https://api.darksky.net/forecast/1454f81bb70550586e66207bcc3aa8d3/19.223319, -70.513781?units=si";
-
-        String baseURL = "https://api.darksky.net/forecast";
-        String apiKey = "1454f81bb70550586e66207bcc3aa8d3";
         String latitude = null ;//"37.8267";
         String longitude = null; //"-122.4233";
-        String units = "units=si";
         if (mLastLocation != null) {
-
             latitude = mLastLocation.getLatitude()+"";
             longitude = mLastLocation.getLongitude()+"";
         }
-        String url = baseURL + "/" + apiKey + "/" + latitude + "," + longitude + "?" + units;
+        String url = BASE_URL + "/" + API_KEY + "/" + latitude + "," + longitude + "?" + UNITS;
         //String url = "https://api.darksky.net/forecast/1454f81bb70550586e66207bcc3aa8d3/37.8267,-122.4233?units=si";
         StringRequest stringRequest = requestHTTP(url);
         queue.add(stringRequest);
-
         // Request a string response from the provided URL.
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                onConnected(null);
+                locationUI();
+
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+
+            } else {
+                Toast.makeText(this, LOCATION_ERROR,Toast.LENGTH_LONG).show();
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+
     }
 }
