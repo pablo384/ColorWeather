@@ -7,4 +7,5 @@
     <string name="minutely">Minutely</string>
     <string name="hourly">Hourly</string>
     <string name="daily">Daily</string>
+    <string name="no_data_to_display">No Data to Display</string>
 </resources>

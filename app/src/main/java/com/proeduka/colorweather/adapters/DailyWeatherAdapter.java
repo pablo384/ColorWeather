@@ -29,7 +29,12 @@ public class DailyWeatherAdapter extends BaseAdapter {
 
     }
     @Override
-    public int getCount() {return days.size();}
+    public int getCount() {
+        if (days==null){
+            return 0;
+        }else {
+        return days.size();}
+    }
 
     @Override
     public Object getItem(int position) {

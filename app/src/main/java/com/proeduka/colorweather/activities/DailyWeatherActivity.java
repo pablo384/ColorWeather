@@ -20,6 +20,8 @@ public class DailyWeatherActivity extends ListActivity {
         setContentView(R.layout.activity_daily_weather);
 
 
+
+
         Intent intent = getIntent();
         ArrayList<Day> daysArray = intent.getParcelableArrayListExtra(MainActivity.DAYS_ARRAY_LIST);
 

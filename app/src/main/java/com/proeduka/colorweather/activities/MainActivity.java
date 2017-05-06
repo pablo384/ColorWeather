@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                descriptionWT.setText("That didn't work!");
+                Toast.makeText(MainActivity.this,"Connection Error", Toast.LENGTH_LONG).show();
             }
         });
         // Add the request to the RequestQueue.
