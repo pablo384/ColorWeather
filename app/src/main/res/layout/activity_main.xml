@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/refresh"
+        app:srcCompat="@drawable/pressed"
         app:layout_constraintLeft_toRightOf="@+id/iconImageView"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="0dp"
