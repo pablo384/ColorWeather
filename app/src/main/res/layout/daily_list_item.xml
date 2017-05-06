@@ -17,6 +17,7 @@
     <TextView
         android:id="@+id/dailyListDescription"
         style="@style/mainFont"
+        android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Partly CLoudy in the Morning" />
@@ -24,6 +25,7 @@
     <TextView
         android:id="@+id/dailyListProbability"
         style="@style/mainFont"
+        android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"

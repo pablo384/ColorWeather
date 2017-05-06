@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String DAYS_ARRAY_LIST = "DAYS_ARRAY_LIST";
     public static final String HOURS_ARRAY_LIST = "HOURS_ARRAY_LIST";
     public static final String MINUTES_ARRAY_LIST = "MINUTES_ARRAY_LIST";
+    public static final String RAIN_PROBABILITY = "Rain Probability: ";
     @BindView(R.id.descriptionTextView) TextView descriptionWT;
     @BindView(R.id.currentTempTextView) TextView currentTemp;
     @BindView(R.id.highestTempTextView) TextView highestTemp;
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
             JSONObject arrayOfDATA = jsonArraywithDailyWeatherDATA.getJSONObject(i);
 
-            String rainProbability = "Rain Probability: "+arrayOfDATA.getDouble(PRECIP_PROBABILITY)*100+"%";
+            String rainProbability = RAIN_PROBABILITY +arrayOfDATA.getDouble(PRECIP_PROBABILITY)*100+"%";
             String description = arrayOfDATA.getString(SUMMARY);
             String dateDay = date.format(arrayOfDATA.getLong(TIME)*1000);
 
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject arrayOfDATA = jsonArraywithMinutelyWeatherDATA.getJSONObject(i);
 
 
-            String rainProbability = arrayOfDATA.getDouble(PRECIP_PROBABILITY)+"%";
+            String rainProbability = RAIN_PROBABILITY + arrayOfDATA.getDouble(PRECIP_PROBABILITY)+"%";
             String dateMinute = date.format(arrayOfDATA.getLong(TIME)*1000);
 
             Minute minute = new Minute(dateMinute, rainProbability);
