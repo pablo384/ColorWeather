@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public static final int requestPermission= 1;
     public static final String LOCATION_ERROR = "Location Error";
     public static final String BASE_URL = "https://api.darksky.net/forecast";
-    public static final String API_KEY = "1454f81bb70550586e66207bcc3aa8d3";
+    public static final String API_KEY = "a655ff78f6dffeda1202a1790322c87f";
     public static final String UNITS = "units=si";
     public static final String DATE_FORMAT_DAYS = "EEEE";
     public static ArrayList<Day> dayArrayListWeather;
@@ -286,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
+        int hola=5;
         if (mLastLocation != null) {
             locationUI();
             Log.d(TAG,String.valueOf(mLastLocation.getLatitude()));
